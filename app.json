@@ -4,8 +4,8 @@
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarBackgroundColor": "#282e39",
+    "navigationBarTitleText": "GPS 测速仪",
+    "navigationBarTextStyle":"#fff"
   }
 }
