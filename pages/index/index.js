@@ -3,7 +3,7 @@
 const app = getApp()
 import echarts from '../../ec-canvas/echarts.js'
 
-let chart=null
+let chart = null
 var option = {
   backgroundColor: '#282e39',
   color: ["#37A2DA", "#32C5E9", "#67E0E3"],
@@ -14,46 +14,50 @@ var option = {
     min: 0,
     max: 330,
     splitNumber: 11,
-    radius: '90%',
-    axisLine: {            // 坐标轴线
-      lineStyle: {       // 属性lineStyle控制线条样式
-        color: [[0.09, 'lime'], [0.82, '#1e90ff'], [1, '#ff4500']],
+    radius: '95%',
+    axisLine: { // 坐标轴线
+      lineStyle: { // 属性lineStyle控制线条样式
+        color: [
+          [0.09, 'lime'],
+          [0.82, '#1e90ff'],
+          [1, '#ff4500']
+        ],
         width: 3,
         shadowColor: '#fff', //默认透明
         shadowBlur: 10
       }
     },
-    axisLabel: {            // 坐标轴小标记
-      textStyle: {       // 属性lineStyle控制线条样式
+    axisLabel: { // 坐标轴小标记
+      textStyle: { // 属性lineStyle控制线条样式
         fontWeight: 'bolder',
         color: '#fff',
         shadowColor: '#fff', //默认透明
         shadowBlur: 10
       }
     },
-    axisTick: {            // 坐标轴小标记
-      length: 15,        // 属性length控制线长
-      lineStyle: {       // 属性lineStyle控制线条样式
+    axisTick: { // 坐标轴小标记
+      length: 15, // 属性length控制线长
+      lineStyle: { // 属性lineStyle控制线条样式
         color: 'auto',
         shadowColor: '#fff', //默认透明
         shadowBlur: 10
       }
     },
-    splitLine: {           // 分隔线
-      length: 25,         // 属性length控制线长
-      lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+    splitLine: { // 分隔线
+      length: 25, // 属性length控制线长
+      lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
         width: 3,
         color: '#fff',
         shadowColor: '#fff', //默认透明
         shadowBlur: 10
       }
     },
-    pointer: {           // 分隔线
+    pointer: { // 分隔线
       shadowColor: '#fff', //默认透明
       shadowBlur: 5
     },
     title: {
-      textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+      textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
         fontWeight: 'bolder',
         fontSize: 20,
         fontStyle: 'italic',
@@ -68,15 +72,18 @@ var option = {
       borderColor: '#fff',
       shadowColor: '#fff', //默认透明
       shadowBlur: 5,
-      offsetCenter: ['-5%', '60%'],       // x, y，单位px
-      textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+      offsetCenter: ['-5%', '60%'], // x, y，单位px
+      textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
         fontWeight: 'bolder',
         color: '#fff',
         fontSize: '20'
       }
     },
-    data: [{ value: 0, name: 'km/h' }]
-  },],
+    data: [{
+      value: 0,
+      name: 'km/h'
+    }]
+  }, ],
   grid: {
     x: 0,
     y: 0
@@ -85,14 +92,14 @@ var option = {
 
 
 function initChart(canvas, width, height) {
-   chart = echarts.init(canvas, null, {
+  chart = echarts.init(canvas, null, {
     width: width,
     height: height
   });
   canvas.setChart(chart);
 
-  var option1= option
-  chart.setOption(option1, true);
+ 
+  chart.setOption(option, true);
   return chart;
 }
 
@@ -129,6 +136,15 @@ Page({
           lng: res.longitude,
           scale: 17
         })
+      },
+      //定位失败
+      fail: res => {
+        console.log(res)
+        wx.showToast({
+          title: '需要打开定位权限',
+          icon: 'none',
+          duration:2500
+        })
       }
     })
   },
@@ -140,29 +156,26 @@ Page({
       let that = this
       wx.getLocation({
         type: 'gcj02',
+        //定位成功
         success: res => {
           let pos = {
             latitude: res.latitude,
             longitude: res.longitude,
           }
-          let speed = res.speed < 0 ? 0 : (res.speed/5*18).toFixed(1)
+          let speed = res.speed < 0 ? 0 : (res.speed / 5 * 18).toFixed(1)
 
           let pointLen = this.data.polyline[0].points.length
 
-          console.log(pointLen)
           //还没有记录过点
           if (!pointLen) {
             this.data.polyline[0].points.push(pos)
           }
-          
-          let lastPos = this.data.polyline[0].points[pointLen - 1] ||{} //线的最后一个点
 
-          console.log(lastPos)
-
+          let lastPos = this.data.polyline[0].points[pointLen - 1] || {} //线的最后一个点
 
           // this.data.polyline[0].points.push(pos)
           //定位点发生变化才加入线的点列表
-          if (!(lastPos.latitude===pos.latitude&&lastPos.longitude===pos.longitude)) {
+          if (!(lastPos.latitude === pos.latitude && lastPos.longitude === pos.longitude)) {
             this.data.polyline[0].points.push(pos)
           }
           this.setData({
@@ -171,9 +184,13 @@ Page({
             polyline: that.data.polyline,
             speed
           })
-          option.series[0].data[0].value=speed
+          option.series[0].data[0].value = speed
           chart.setOption(option)
         },
+        //定位失败
+        fail: res => {
+          console.log(res)
+        }
       })
     }, 1000)
 

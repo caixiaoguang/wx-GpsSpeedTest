@@ -1,19 +1,16 @@
 <!--index.wxml-->
 <view class="container">
-  <view class='wrapper'>
-    <view class="locaInfo">
-      <view class='speedInfo'>
-        <ec-canvas ec="{{ec}}"></ec-canvas>
-      </view>
-    </view>
-    <view class="mapWrapper">
-      <map id='myMap' subkey="LPTBZ-6OALU-KHKVH-4LBJM-PMO6F-WDBSF" latitude='{{lat}}' longitude='{{lng}}' show-location polyline="{{polyline}}" scale='{{scale}}' enable-scroll='{{false}}'>
-        <!-- 定位标志 -->
-        <cover-view class="iconLoca" bindtap='move2CurrentPos'>
-          <cover-image src='../../img/location.png'></cover-image>
-        </cover-view>
-      </map>
+  <view class="locaInfo">
+    <view class='speedInfo'>
+      <ec-canvas ec="{{ec}}"></ec-canvas>
     </view>
   </view>
-
+  <view class="mapWrapper">
+    <map id='myMap' subkey="LPTBZ-6OALU-KHKVH-4LBJM-PMO6F-WDBSF" latitude='{{lat}}' longitude='{{lng}}' show-location polyline="{{polyline}}" scale='{{scale}}' enable-scroll='{{false}}'>
+      <!-- 定位标志 -->
+      <cover-view class="iconLoca" bindtap='move2CurrentPos'>
+        <cover-image src='../../img/location.png'></cover-image>
+      </cover-view>
+    </map>
+  </view>
 </view>
