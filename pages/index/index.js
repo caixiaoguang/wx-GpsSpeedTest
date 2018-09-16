@@ -84,10 +84,6 @@ var option = {
       name: 'km/h'
     }]
   }, ],
-  grid: {
-    x: 0,
-    y: 0
-  }
 };
 
 
@@ -98,7 +94,6 @@ function initChart(canvas, width, height) {
   });
   canvas.setChart(chart);
 
- 
   chart.setOption(option, true);
   return chart;
 }
@@ -126,6 +121,21 @@ Page({
     }
   },
 
+  //获取位置失败
+  getLocFail: () => {
+    wx.showModal({
+      title: '无定位权限',
+      content: '使用该功能需要允许小程序获取定位权限，点击确定开启定位权限',
+      showCancel:false,
+      success: (confirm) => {
+        if (confirm) {
+          wx.openSetting({})
+        }
+
+      }
+    })
+  },
+
   //地图中心移动到当前定位点
   move2CurrentPos() {
     wx.getLocation({
@@ -138,14 +148,7 @@ Page({
         })
       },
       //定位失败
-      fail: res => {
-        console.log(res)
-        wx.showToast({
-          title: '需要打开定位权限',
-          icon: 'none',
-          duration:2500
-        })
-      }
+      fail: this.getLocFail
     })
   },
 
@@ -189,7 +192,8 @@ Page({
         },
         //定位失败
         fail: res => {
-          console.log(res)
+          this.getLocFail()
+          clearInterval(timeId)
         }
       })
     }, 1000)
@@ -209,48 +213,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-    this.addPoint2Polyline()
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    this.addPoint2Polyline()
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  }
 })
