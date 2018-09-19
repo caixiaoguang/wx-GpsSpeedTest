@@ -126,7 +126,7 @@ Page({
     wx.showModal({
       title: '无定位权限',
       content: '使用该功能需要允许小程序获取定位权限，点击确定开启定位权限',
-      showCancel:false,
+      showCancel: false,
       success: (confirm) => {
         if (confirm) {
           wx.openSetting({})
@@ -205,7 +205,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    //页面载入后获取当前定位并设为地图中心点
     // this.move2CurrentPos();
   },
 
@@ -222,5 +221,23 @@ Page({
   onShow: function() {
     this.addPoint2Polyline()
   },
+
+  onShareAppMessage: () => {
+    return {
+      title: "GPS测速仪，测测车速有多快",
+      fail: (e) => {
+        let errMsg = e.errMsg || '';
+        //对不是用户取消转发导致的失败进行提示
+        let msg = '分享失败，请重新分享'
+        if (errMsg.indexOf('cancel') !== -1) {
+          msg = '取消分享'
+        }
+        wx.showToast({
+          title: msg,
+          icon: 'none'
+        })
+      }
+    }
+  }
 
 })

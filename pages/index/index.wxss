@@ -6,7 +6,7 @@ page{
   height: 100%;
 }
 .locaInfo {
-  height: 50%;
+  height: 40%;
 }
 
 .speedInfo {
@@ -14,7 +14,7 @@ page{
 }
 
 .mapWrapper{
-  height: 50%;
+  height: 60%;
 }
 
 map {

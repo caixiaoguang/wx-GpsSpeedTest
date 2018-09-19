@@ -6,7 +6,7 @@
     </view>
   </view>
   <view class="mapWrapper">
-    <map id='myMap' subkey="LPTBZ-6OALU-KHKVH-4LBJM-PMO6F-WDBSF" latitude='{{lat}}' longitude='{{lng}}' show-location polyline="{{polyline}}" scale='{{scale}}' enable-scroll='{{false}}'>
+    <map id='myMap' subkey="LPTBZ-6OALU-KHKVH-4LBJM-PMO6F-WDBSF" latitude='{{lat}}' longitude='{{lng}}' show-location polyline="{{polyline}}" scale='{{scale}}'>
       <!-- 定位标志 -->
       <cover-view class="iconLoca" bindtap='move2CurrentPos'>
         <cover-image src='../../img/location.png'></cover-image>
