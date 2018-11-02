@@ -182,8 +182,8 @@ Page({
             this.data.polyline[0].points.push(pos)
           }
           this.setData({
-            lng: res.longitude,
-            lat: res.latitude,
+            // lng: res.longitude,
+            // lat: res.latitude,
             polyline: that.data.polyline,
             speed
           })
